@@ -3,6 +3,7 @@ import numpy as np
 from ...math import inverse_transformation_matrix
 from .line import Line
 from .ray import Ray
+import typing
 
 def _kross(p1, p2):
     return p1[0]*p2[1] - p2[0]*p1[1]
@@ -77,7 +78,7 @@ class Box():
         self.height = diff[2]
         self.half_extents[2] = diff[2]/2
 
-    def contains_point(self, point: np.array):
+    def contains_point(self, point: np.array, inflate: typing.Union[float, np.array] = 0):
 
         # change point to T format
         if np.size(point, 0) == 3:
@@ -93,8 +94,9 @@ class Box():
         T_inverse = inverse_transformation_matrix(T)
         corrected_point = T_inverse.dot(point)
         abs_corrected_point = np.abs(corrected_point)
-
-        return np.all(np.less_equal(abs_corrected_point[0:3], self.half_extents))
+    
+        # Note: there could be some numerical instability, where very close numbers aren't equal.
+        return np.all(np.less_equal(abs_corrected_point[0:3], self.half_extents + inflate))
     
 
 

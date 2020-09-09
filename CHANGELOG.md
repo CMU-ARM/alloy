@@ -1,5 +1,7 @@
 # Changelog
 
+## [Unrelease]
+- **[Added]** *[spatial]* An inflate value when checking whether a point is in a box. It checks if its in the boundary.
 
 ## [0.2.2] - 2020-08-03
 - **[Added]** *[ros]* Implemented same transformation function (`do_transform_point`,`do_transform_pose`) interface from tf2_geometry_msgs to bypass python3/PyKDL requirements
